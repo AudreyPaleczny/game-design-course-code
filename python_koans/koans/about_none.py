@@ -51,19 +51,20 @@ class AboutNone(Koan):
         #
         #     https://github.com/gregmalcolm/python_koans/wiki/Class-Attribute
 
-        self.assertEqual(__, ex2.__class__) 
-
+        self.assertEqual(AttributeError, ex2.__class__) 
 
         # I CANNOT RUN THIS SO I CANNOT FILL IN THE BLANK ABOVE AND BELOW
 
 
         # What message was attached to the exception?
         # (HINT: replace __ with part of the error message.)
-        self.assertRegex(ex2.args[0], __)
+        # self.assertRegex(ex2.args[0], "name 'some_method_none_does_not_know_about' does not exist")
+        # self.assertRegex(ex2.args[0], AssertionError)
+        self.assertRegex(ex2.args[0], "has no attribute")
 
     def test_none_is_distinct(self):
         """
         None is distinct from other things which are False.
         """
-        self.assertEqual(None, None is not 0)
-        self.assertEqual(None, None is not False) #are both these blanks correct as None?
+        self.assertEqual(True, None is not 0)
+        self.assertEqual(True, None is not False) 
