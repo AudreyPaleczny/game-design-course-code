@@ -25,7 +25,7 @@ UP = 'up'
 DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
-# A = 'left'      --> if you wanted to have another player
+
 
 HEAD = 0 # The index of the worm's head
 
@@ -109,7 +109,7 @@ def runGame():
         FPSCLOCK.tick(FPS)
 
 def getRandomLocation():
-    return {'x': random.randint(0, CELLWIDTH - 1), 'y': random.randint(0, CELLHEIGHT - 1)}
+    return {'x': random.randint(3, CELLWIDTH - 3), 'y': random.randint(3, CELLHEIGHT - 3)}
 
 def drawGrid():
     for x in range(0, WINDOWWIDTH, CELLSIZE):
@@ -133,7 +133,10 @@ def drawApple(apple):
     pygame.draw.rect(DISPLAYSURF, RED, appleSegmentRect)
 
 def drawScore(score):
-    return
+    scoreSurf = BASICFONT.render('Score: %s' % (score), True, WHITE)
+    scoreRect = scoreSurf.get_rect()
+    scoreRect.topleft = (WINDOWWIDTH - 120, 10)
+    DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 def terminate():
     pygame.quit()
@@ -172,7 +175,39 @@ def checkForKeyPress():
     return False
 
 def showStartScreen():
-    return
+    titleFont = pygame.font.Font('freesansbold.ttf', 100)
+    titleSurf1 = titleFont.render('Wormy!', True, WHITE, BLUE)
+    titleSurf2 = titleFont.render('Wormy!', True, RED)
+    
+    degrees1 = 0
+    degrees2 = 0
+    while(True): #looks like a game loop
+        DISPLAYSURF.fill(BGCOLOR)
+        rotatedSurf1 = pygame.transform.rotate(titleSurf1, degrees1)
+        rotatedRect1 = rotatedSurf1.get_rect()
+        rotatedRect1.center = (WINDOWWIDTH/2, WINDOWHEIGHT/2)
+        DISPLAYSURF.blit(rotatedSurf1, rotatedRect1)
+        
+        rotatedSurf2 = pygame.transform.rotate(titleSurf2, degrees2)
+        rotatedRect2 = rotatedSurf2.get_rect()
+        rotatedRect2.center = (WINDOWWIDTH/2, WINDOWHEIGHT/2)
+        DISPLAYSURF.blit(rotatedSurf2, rotatedRect2)
+        
+        drawPressKeyMsg()
+        
+        if checkForKeyPress():
+            pygame.event.get() #clear the event cache
+            return
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+        degrees1 += 3
+        degrees2 += 7
+
+def drawPressKeyMsg():
+    pressKeySurf = BASICFONT.render('Press any key to play.', True, DARKGRAY)
+    pressKeyRect = pressKeySurf.get_rect()
+    pressKeyRect.topleft = (WINDOWWIDTH - 200, WINDOWHEIGHT - 30)
+    DISPLAYSURF.blit(pressKeySurf, pressKeyRect)
 
 if __name__ == '__main__':
     main()
