@@ -19,6 +19,7 @@ GREEN       = (  0, 255,   0)
 DARKGREEN   = (  0, 155,   0)
 DARKGRAY    = ( 40,  40,  40)
 BLUE        = (  0,   0, 255)
+YELLOW      = (255, 255,   0)
 BGCOLOR = BLACK
 
 UP = 'up'
@@ -148,14 +149,14 @@ def runGame():
         DISPLAYSURF.fill(BGCOLOR)
         drawGrid()
         drawWorm(wormCoords) # coords defined later
-        drawWorm(wormCoords2)
+        drawWorm2(wormCoords2)
         drawApple(apple)
-        drawApple(apple2)
+        drawApple2(apple2)
 
         # we didn't finish checking drawScore in class so look at solutions later
         drawScore(len(wormCoords) - 3)
-        #drawScore(len(wormCoords2) - 3) 
-        # need to make a new drawScore method for this because it needs to be in a different spot on the screen
+        drawScore2(len(wormCoords2) - 3) 
+        
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
@@ -177,17 +178,41 @@ def drawWorm(wormCoords):
         wormInnerSegmentRect = pygame.Rect(x+4, y+4, CELLSIZE - 8, CELLSIZE - 8)
         pygame.draw.rect(DISPLAYSURF, WHITE, wormInnerSegmentRect)
 
+def drawWorm2(wormCoords):
+    for segment in wormCoords:
+        x = segment['x'] * CELLSIZE
+        y = segment['y'] * CELLSIZE
+        wormSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
+        pygame.draw.rect(DISPLAYSURF, GREEN, wormSegmentRect)
+        wormInnerSegmentRect = pygame.Rect(x+4, y+4, CELLSIZE - 8, CELLSIZE - 8)
+        pygame.draw.rect(DISPLAYSURF, WHITE, wormInnerSegmentRect)
+
 def drawApple(apple):
     x = apple['x'] * CELLSIZE
     y = apple['y'] * CELLSIZE
     appleSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
     pygame.draw.rect(DISPLAYSURF, RED, appleSegmentRect)
 
+def drawApple2(apple):
+    x = apple['x'] * CELLSIZE
+    y = apple['y'] * CELLSIZE
+    appleSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
+    pygame.draw.rect(DISPLAYSURF, YELLOW, appleSegmentRect)
+
 def drawScore(score):
-    scoreFont = pygame.font.Font('freesansbold.ttf', 80)
-    scoreSurf = scoreFont.render('Score: %s' % (score), True, WHITE)
+    scoreFont = pygame.font.Font('freesansbold.ttf', 25)
+    scoreSurf = scoreFont.render('Blue Score: %s' % (score), True, WHITE)
     scoreRect = scoreSurf.get_rect()
-    scoreRect.topleft = (WINDOWWIDTH - 120, 10)
+    #scoreRect.topleft = (WINDOWWIDTH - 120, 10)
+    scoreRect.topleft = (WINDOWWIDTH - 600, 400)
+    DISPLAYSURF.blit(scoreSurf, scoreRect)
+
+def drawScore2(score):
+    scoreFont = pygame.font.Font('freesansbold.ttf', 25)
+    scoreSurf = scoreFont.render('Green Score: %s' % (score), True, WHITE)
+    scoreRect = scoreSurf.get_rect()
+    #scoreRect.topleft = (WINDOWWIDTH - 120, 10)
+    scoreRect.topleft = (WINDOWWIDTH - 200, 400)
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 def terminate():
@@ -214,6 +239,7 @@ def showGameOverScreen():
         if checkForKeyPress():
             pygame.event.get()
             return
+    
 
 def checkForKeyPress():
     for event in pygame.event.get():
