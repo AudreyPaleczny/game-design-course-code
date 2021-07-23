@@ -1,7 +1,9 @@
+# wormy and wormette (2 worm game)
+
 import random, pygame, sys
 from pygame.locals import *
 
-FPS = 10 #FPS = 15
+FPS = 8 #FPS = 15
 WINDOWWIDTH = 640
 WINDOWHEIGHT = 480
 CELLSIZE = 20
@@ -204,7 +206,7 @@ def drawScore(score):
     scoreSurf = scoreFont.render('Blue Score: %s' % (score), True, WHITE)
     scoreRect = scoreSurf.get_rect()
     #scoreRect.topleft = (WINDOWWIDTH - 120, 10)
-    scoreRect.topleft = (WINDOWWIDTH - 600, 400)
+    scoreRect.topleft = (WINDOWWIDTH - 200, 400)
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 def drawScore2(score):
@@ -212,7 +214,7 @@ def drawScore2(score):
     scoreSurf = scoreFont.render('Green Score: %s' % (score), True, WHITE)
     scoreRect = scoreSurf.get_rect()
     #scoreRect.topleft = (WINDOWWIDTH - 120, 10)
-    scoreRect.topleft = (WINDOWWIDTH - 200, 400)
+    scoreRect.topleft = (WINDOWWIDTH - 600, 400)
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 def terminate():
